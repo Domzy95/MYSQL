@@ -173,3 +173,25 @@ SELECT * FROM albums;
 
 SELECT AVG(length) AS "Average Duration"
 FROM songs;
+
+/*IZBERI NAJDALJŠO SKLADBO IZ VSAKEGA ALBUMA*/
+SELECT 
+albums.name AS "Album Name",
+albums.release_year AS "Release Year",
+MAX(songs.length) AS "Longest Song"
+FROM albums
+JOIN songs ON albums.id = songs.album_id
+GROUP BY songs.album_id
+ORDER BY "Longest Song" DESC
+LIMIT 1;
+
+
+/*PRIDOBI ŠTEVILO PESMI ZA VSAK BAND*/
+
+SELECT bands.name AS "Band Name",
+COUNT (songs.id) AS "Number of Songs",
+FROM bands
+JOIN albums ON bands.id = albums.band_id
+JOIN songs ON albums.id = songs.album_id
+GROUP BY albums.band_id; /*VSE PESMI VSE ALBUMOV BOJO GRUPANI GLEDE NA BANDSID*/
+
